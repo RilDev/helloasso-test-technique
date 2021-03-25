@@ -4,6 +4,7 @@
       type="text"
       placeholder="Entre le prénom de ton ami ici..."
       class="rounded-md border-gray-900 mt-5 px-5 py-3 shadow-sm w-full focus:outline-none placeholder-gray-500"
+      @input="$emit('updateValue', $event.target.value)"
     />
     <div title="Clear Search" class="absolute top-6 right-4 cursor-pointer">
       <svg width="24" height="24" viewBox="0 0 24 24">
@@ -16,5 +17,16 @@
 </template>
 
 <script>
-export default {};
+export default {
+  props: {
+    value: {
+      type: String,
+      required: true,
+    },
+  },
+  emits: ["updateValue"],
+  setup() {
+
+  },
+};
 </script>

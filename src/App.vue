@@ -1,28 +1,45 @@
 <template>
   <main class="p-8 max-w-lg mx-auto">
     <div class="text-center text-3xl font-bold">Mon ami s'appelle...</div>
-    <SearchInput></SearchInput>
+    <SearchInput :value="value" @updateValue="findFirstName"></SearchInput>
     <ul class="mt-5">
-      <li class="flex bg-gray-50 hover:bg-gray-100 mb-3 px-4 py-3 rounded-md shadow-md sm:mb-5">
-        <img class="w-20 h-20 rounded-full" src="https://reqres.in/img/faces/1-image.jpg" alt="" width="384" height="512">
-        <div class="ml-5 flex flex-col justify-between">
-          <div class="text-xl font-bold">George Bluth</div>
-          <a href="mailto:george.bluth@reqres.in" class="text-blue-600 hover:text-blue-500">george.bluth@reqres.in</a>
-        </div>
-      </li>
+      <ResultCard></ResultCard>
+      <ResultCard></ResultCard>
     </ul>
   </main>
 </template>
 
 <script>
 import SearchInput from "/src/components/SearchInput.vue";
+import ResultCard from "/src/components/ResultCard.vue";
+import axios from "axios";
+import debounce from "lodash/debounce";
+
+const {
+  data: { data: rawResultList },
+} = await axios.get(`https://reqres.in/api/users`);
 
 export default {
   components: {
     SearchInput,
+    ResultCard,
   },
   setup() {
-    return {};
+    console.log("🚀 ~ file: App.vue ~ line 28 ~ rawResultList", rawResultList);
+
+    // dynamic values
+    const searchValue = "";
+
+    // methods
+    const findFirstName = debounce((value) => {
+      console.log(value);
+    }, 300);
+    return {
+      // dynamic values
+      searchValue,
+      // methods
+      findFirstName,
+    };
   },
 };
 </script>
