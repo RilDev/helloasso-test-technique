@@ -4,18 +4,51 @@
   >
     <img
       class="w-20 h-20 rounded-full"
-      src="https://reqres.in/img/faces/1-image.jpg"
+      :src="avatar"
       alt=""
       width="384"
       height="512"
     />
     <div class="ml-5 flex flex-col justify-between">
-      <div class="text-xl font-bold">George Bluth</div>
+      <div class="text-xl font-bold">{{ fullName }}</div>
       <a
-        href="mailto:george.bluth@reqres.in"
+        :href="mailtoUrl"
         class="text-blue-600 hover:text-blue-500"
-        >george.bluth@reqres.in</a
+        >{{ email }}</a
       >
     </div>
   </li>
 </template>
+
+<script>
+import { computed } from "vue";
+
+export default {
+  props: {
+    result: {
+      type: Object,
+      required: true,
+    },
+  },
+  setup(props) {
+    // static values
+    const firstName = props.result["first_name"];
+    const lastName = props.result["last_name"];
+    const email = props.result.email;
+    const avatar = props.result.avatar;
+
+    // dynamic values
+    const fullName = computed(() => `${firstName} ${lastName}`);
+    const mailtoUrl = computed(() => `mailto:${email}`);
+
+    return {
+      // static values
+      email,
+      avatar,
+      // dynamic values
+      fullName,
+      mailtoUrl,
+    };
+  },
+};
+</script>

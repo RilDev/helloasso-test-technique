@@ -3,8 +3,10 @@
     <div class="text-center text-3xl font-bold">Mon ami s'appelle...</div>
     <SearchInput :value="value" @updateValue="findFirstName"></SearchInput>
     <ul class="mt-5">
-      <ResultCard></ResultCard>
-      <ResultCard></ResultCard>
+      <ResultCard v-for="result in results"
+      :key="result.id"
+      :result="result"
+      ></ResultCard>
     </ul>
   </main>
 </template>
@@ -25,10 +27,9 @@ export default {
     ResultCard,
   },
   setup() {
-    console.log("🚀 ~ file: App.vue ~ line 28 ~ rawResultList", rawResultList);
-
     // dynamic values
     const searchValue = "";
+    const results = rawResultList;
 
     // methods
     const findFirstName = debounce((value) => {
@@ -37,6 +38,7 @@ export default {
     return {
       // dynamic values
       searchValue,
+      results,
       // methods
       findFirstName,
     };
