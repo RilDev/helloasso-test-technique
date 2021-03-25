@@ -5,13 +5,9 @@
       v-model:value="searchValue"
       @updateValue="findFirstName"
       @clearSearch="clearSearch"
-    ></SearchInput>
+    />
     <ul class="mt-5">
-      <ResultCard
-        v-for="result in results"
-        :key="result.id"
-        :result="result"
-      ></ResultCard>
+      <ResultCard v-for="result in results" :key="result.id" :result="result" />
     </ul>
   </main>
 </template>
@@ -23,9 +19,10 @@ import axios from "axios";
 import debounce from "lodash/debounce";
 import { ref } from "vue";
 
-const {
-  data: { data: rawResultList },
-} = await axios.get(`https://reqres.in/api/users`);
+let rawResultList = {};
+axios.get(`https://reqres.in/api/users`).then((data) => {
+  rawResultList = data.data.data;
+});
 
 export default {
   components: {
@@ -51,7 +48,7 @@ export default {
         );
       }
     }, 300);
-
+    ``;
     function clearSearch() {
       searchValue.value = "";
       results.value = [];
