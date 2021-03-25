@@ -21,7 +21,7 @@ import SearchInput from "/src/components/SearchInput.vue";
 import ResultCard from "/src/components/ResultCard.vue";
 import axios from "axios";
 import debounce from "lodash/debounce";
-import { ref, watch } from "vue";
+import { ref } from "vue";
 
 const {
   data: { data: rawResultList },
@@ -36,9 +36,6 @@ export default {
     // dynamic values
     const searchValue = ref("");
     const results = ref([]);
-
-    // watch
-    watch(searchValue, () => console.log(searchValue.value));
 
     // methods
     const findFirstName = debounce((inputSearch) => {

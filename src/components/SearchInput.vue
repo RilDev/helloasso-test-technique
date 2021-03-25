@@ -3,6 +3,7 @@
     <input
       type="text"
       :value="value"
+      ref="searchInput"
       placeholder="Entre le prénom de ton ami ici..."
       class="rounded-md border-gray-900 mt-5 px-5 py-3 shadow-sm w-full focus:outline-none placeholder-gray-500"
       @input="
@@ -12,7 +13,10 @@
     />
     <div
       title="Clear Search"
-      @click="$emit('clearSearch')"
+      @click="
+        $emit('clearSearch');
+        focusInput();
+      "
       class="absolute top-8 right-4 cursor-pointer"
     >
       <svg width="24" height="24" viewBox="0 0 24 24">
@@ -25,6 +29,8 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
   props: {
     value: {
@@ -33,6 +39,14 @@ export default {
     },
   },
   emits: ["updateValue", "clearSearch", "update:value"],
-  setup() {},
+  setup() {
+    const searchInput = ref(null);
+    
+    function focusInput() {
+      searchInput.value.focus();
+    }
+
+    return { searchInput, focusInput };
+  },
 };
 </script>
